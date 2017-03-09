@@ -1,0 +1,23 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TForm1','FORMDATA',[
+  'TPF0'#6'TForm1'#5'Form1'#4'Left'#3#23#1#6'Height'#3#242#0#3'Top'#3#212#0#5'W'
+  +'idth'#3#242#1#13'ActiveControl'#7#9'ComboBox1'#7'Caption'#6#5'Form1'#12'Cli'
+  +'entHeight'#3#242#0#11'ClientWidth'#3#242#1#8'OnCreate'#7#10'FormCreate'#10
+  +'LCLVersion'#6#6'0.9.31'#0#6'TLabel'#6'Label2'#4'Left'#2'X'#6'Height'#2#18#3
+  +'Top'#2#17#5'Width'#2'+'#7'Caption'#6#6'Label2'#11'ParentColor'#8#0#0#7'TBut'
+  +'ton'#7'Button2'#4'Left'#2'P'#6'Height'#2#25#3'Top'#3#144#0#5'Width'#3'S'#1#7
+  +'Caption'#6#7'Button2'#7'OnClick'#7#12'Button2Click'#8'TabOrder'#2#0#0#0#10
+  +'TStatusBar'#10'StatusBar1'#4'Left'#2#0#6'Height'#2#21#3'Top'#3#221#0#5'Widt'
+  +'h'#3#242#1#6'Panels'#14#0#0#0#9'TComboBox'#9'ComboBox1'#4'Left'#3'X'#1#6'He'
+  +'ight'#2#27#3'Top'#2#8#5'Width'#3#150#0#10'ItemHeight'#2#0#8'OnChange'#7#15
+  +'ComboBox1Change'#8'TabOrder'#2#2#4'Text'#6#9'ComboBox1'#0#0#12'TProgressBar'
+  +#12'ProgressBar1'#4'Left'#2#16#6'Height'#2#20#3'Top'#2'P'#5'Width'#3#208#1#8
+  +'TabOrder'#2#3#0#0#6'TLabel'#6'Label1'#4'Left'#2'0'#6'Height'#2#18#3'Top'#3
+  +#193#0#5'Width'#2'+'#7'Caption'#6#6'Label1'#11'ParentColor'#8#7'OnClick'#7#11
+  +'Label1Click'#0#0#7'TButton'#7'Button1'#4'Left'#3'8'#1#6'Height'#2#25#3'Top'
+  +#3#184#0#5'Width'#2'k'#7'Caption'#6#7'Button1'#7'OnClick'#7#12'Button1Click'
+  +#8'TabOrder'#2#4#0#0#6'TLabel'#6'Label3'#4'Left'#2'X'#6'Height'#2#18#3'Top'#2
+  +'x'#5'Width'#2'+'#7'Caption'#6#6'Label3'#11'ParentColor'#8#0#0#6'TImage'#6'I'
+  +'mage1'#4'Left'#3#136#1#6'Height'#2'Z'#3'Top'#2'p'#5'Width'#2'Z'#0#0#0
+]);

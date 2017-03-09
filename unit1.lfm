@@ -1,0 +1,85 @@
+object Form1: TForm1
+  Left = 279
+  Height = 242
+  Top = 212
+  Width = 498
+  ActiveControl = ComboBox1
+  Caption = 'Form1'
+  ClientHeight = 242
+  ClientWidth = 498
+  OnCreate = FormCreate
+  LCLVersion = '0.9.31'
+  object Label2: TLabel
+    Left = 88
+    Height = 18
+    Top = 17
+    Width = 43
+    Caption = 'Label2'
+    ParentColor = False
+  end
+  object Button2: TButton
+    Left = 80
+    Height = 25
+    Top = 144
+    Width = 339
+    Caption = 'Button2'
+    OnClick = Button2Click
+    TabOrder = 0
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 21
+    Top = 221
+    Width = 498
+    Panels = <>
+  end
+  object ComboBox1: TComboBox
+    Left = 344
+    Height = 27
+    Top = 8
+    Width = 150
+    ItemHeight = 0
+    OnChange = ComboBox1Change
+    TabOrder = 2
+    Text = 'ComboBox1'
+  end
+  object ProgressBar1: TProgressBar
+    Left = 16
+    Height = 20
+    Top = 80
+    Width = 464
+    TabOrder = 3
+  end
+  object Label1: TLabel
+    Left = 48
+    Height = 18
+    Top = 193
+    Width = 43
+    Caption = 'Label1'
+    ParentColor = False
+    OnClick = Label1Click
+  end
+  object Button1: TButton
+    Left = 312
+    Height = 25
+    Top = 184
+    Width = 107
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 4
+  end
+  object Label3: TLabel
+    Left = 88
+    Height = 18
+    Top = 120
+    Width = 43
+    Caption = 'Label3'
+    ParentColor = False
+  end
+  object Image1: TImage
+    Left = 392
+    Height = 90
+    Top = 112
+    Width = 90
+  end
+end
