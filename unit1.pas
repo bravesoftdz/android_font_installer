@@ -15,17 +15,21 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     ComboBox1: TComboBox;
     Image1: TImage;
-    Label1: TLabel;
+    Image2: TImage;
     Label2: TLabel;
-    Label3: TLabel;
+    Memo1: TMemo;
     ProgressBar1: TProgressBar;
     StatusBar1: TStatusBar;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
     procedure Label1Click(Sender: TObject);
   private
     { private declarations }
@@ -46,7 +50,10 @@ const adb = 'adb.exe';
 {$ifdef linux}
 const adb = 'adb';
 {$endif}
-const linktosite = 'http://hy.wikipedia.org';
+const linktosite = 'http://hy-am.org';
+const linktofund = 'http://www.osi.am';
+const linktohelp = 'http://hy-am.org/docs/armenian-for-android.html';
+
 procedure SetLang;
 begin
   if Trans.language = Trans.en then begin
@@ -54,39 +61,22 @@ begin
 //  Form1.Label1.Caption:= Trans.engpathadb;
   Form1.Button2.Caption:= Trans.eninstall;
   Form1.Label2.Caption:= Trans.enchooselang;
-  Form1.Label3.Caption:= Trans.enbefore;
+  Form1.Memo1.Caption:= Trans.enbefore;
   Form1.Button1.Caption := Trans.enabout;
+  Form1.Button2.Caption := Trans.enhelp;
   end;
   if Trans.language = Trans.hy then begin
   Form1.Caption:=hytitle;
   Form1.Button1.Caption := Trans.hyabout;
+  Form1.Button3.Caption := Trans.hyhelp;
 //  Form1.Label1.Caption:= Trans.hypathadb;
   Form1.Button2.Caption:= Trans.hyinstall;
   Form1.Label2.Caption := Trans.hychooselang;
-  Form1.Label3.Caption:= Trans.hybefore;
+  Form1.Memo1.Caption:= Trans.hybefore;
   end;
 end; //SetLang
 
-procedure TForm1.FormCreate(Sender: TObject);
-var i : integer;
-begin
- // Trans.SetLang(Trans.en);
-//  setlength(trans.languagenames, Trans.langcount);
-  Trans.Init;
-  SetLang;
-  StatusBar1.Caption:= '';
-  Label1.Caption:=linktosite;
-  Label1.Font.Color:=clBlue;
-  Label1.Font.Style:= Label1.Font.Style + [fsUnderline];
-
-  ComboBox1.Caption:= Trans.languagenames[Trans.language];
-  for  i := 0 to (High(Trans.languagenames) )do begin
-      ComboBox1.Items.Add(Trans.languagenames[i]);
-  end;
-   Image1.Picture.LoadFromFile('osi.png');
-end;
-
-procedure TForm1.Label1Click(Sender: TObject);
+procedure WebClick(UrlClick: string);
 var
   v: THTMLBrowserHelpViewer;
   BrowserPath, BrowserParams: string;
@@ -99,7 +89,7 @@ begin
     v.FindDefaultBrowser(BrowserPath,BrowserParams);
     debugln(['Path=',BrowserPath,' Params=',BrowserParams]);
 
-    URL:=linktosite;
+    URL:=UrlClick;
     p:=System.Pos('%s', BrowserParams);
     System.Delete(BrowserParams,p,2);
     System.Insert(URL,BrowserParams,p);
@@ -115,7 +105,39 @@ begin
   finally
     v.Free;
   end;
-end; //labelclick
+end; //btn3 click
+
+procedure TForm1.FormCreate(Sender: TObject);
+var i : integer;
+begin
+ // Trans.SetLang(Trans.en);
+//  setlength(trans.languagenames, Trans.langcount);
+  Trans.Init;
+  SetLang;
+  StatusBar1.Caption:= '';
+
+  ComboBox1.Caption:= Trans.languagenames[Trans.language];
+  for  i := 0 to (High(Trans.languagenames) )do begin
+      ComboBox1.Items.Add(Trans.languagenames[i]);
+  end;
+
+end;
+
+procedure TForm1.Image1Click(Sender: TObject);
+begin
+     WebClick(linktosite); //hyAMClick
+end;
+
+procedure TForm1.Image2Click(Sender: TObject);
+begin
+    WebClick(linktofund); //Link to fund
+end;
+
+procedure TForm1.Label1Click(Sender: TObject);
+begin
+
+end;
+
 
 
 function ExecCommand(cmd, args : string) : integer;
@@ -163,14 +185,17 @@ CurDir := ExtractFilePath(Application.ExeName);
 adbpath := CurDir + {DirectorySeparator +} adb;
   If SysUtils.FileExists(adbpath) then
   begin
-   if Trans.language = Trans.en then Form1.StatusBar1.Caption:= Trans.enwaitingfordevice;
-   if Trans.language = Trans.hy then Form1.StatusBar1.Caption:= Trans.hywaitingfordevice;
-   ExecCommand(adbpath, 'kill-server');
-   if Trans.GetLang() = Trans.en then Form1.StatusBar1.Caption:= Trans.enwaitingfordevice;
-   if Trans.GetLang() = Trans.hy then Form1.StatusBar1.Caption:= Trans.hywaitingfordevice;
+   exitcode := ExecCommand(adbpath, 'kill-server');
+   if exitcode = - 1 then begin
+       MessageDlg ('', Trans.hynotsuccess, mtError, [mbOK],0);
+       halt;
+   end;
    //ExecCommand('wait-for-device');
-   ExecCommand(adbpath, 'remount');
-
+   exitcode := ExecCommand(adbpath, 'remount');
+   if exitcode = - 1 then begin
+       MessageDlg ('', Trans.hynotsuccess, mtError, [mbOK],0);
+       halt;
+   end;
    flist := TStringList.Create;
    ttfpath := CurDir + 'ttf';
    fs0.FindFiles (flist, ttfpath, '*.ttf');
@@ -178,9 +203,13 @@ adbpath := CurDir + {DirectorySeparator +} adb;
    Form1.ProgressBar1.Position:= 0;
 
    for i := 0 to flist.Count - 1 do begin
-      params := 'push ' + ttfpath + DirectorySeparator + flist[i] + ' /system/fonts/' + flist[i];
+      params := 'push "' + ttfpath + DirectorySeparator + flist[i] + '" /system/fonts/' + flist[i];
       exitcode := ExecCommand (adbpath, params);
-      if exitcode = -1 then begin success := false end;
+      if exitcode = -1 then begin
+          success := false; //meaningless now if we add the following
+          MessageDlg ('', Trans.hynotsuccess, mtError, [mbOK],0);
+          halt;
+      end;
       Form1.ProgressBar1.Position := Form1.ProgressBar1.Position + 1;
    end;
    flist.Free;
@@ -212,6 +241,11 @@ adbpath := CurDir + {DirectorySeparator +} adb;
   end;
 end; //button2click
 
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+      WebClick(linktohelp); //Link to fund
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   if Trans.language = Trans.en then begin
@@ -227,6 +261,8 @@ begin
   Trans.language:= ComboBox1.ItemIndex;
   SetLang;
 end;
+
+
 
 initialization
   {$I unit1.lrs}

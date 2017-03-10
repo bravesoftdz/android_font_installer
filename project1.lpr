@@ -10,13 +10,13 @@ uses
   Forms, Unit1, Trans, Work
   { you can add units after this };
 
-{$IFDEF WINDOWS}{$R project1.rc}{$ENDIF}
+//{$IFDEF WINDOWS}{$R project1.rc}{$ENDIF}
 
 {$R *.res}
 
 begin
+  Application.Title:='Armenian fonts installer for Android by hy-AM.org';
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.
-
