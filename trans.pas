@@ -24,7 +24,7 @@ const
    hyAboutTitle = 'Ծրագրի մասին';
 
    hyAboutContent = 'Հայերեն տառատեսակների տեղադրիչ' + LineEnding +
-  'Անդրոիդ սարքերի համար վ. 1.0 (2011 մարտ 27)' + LineEnding +  LineEnding +
+  'Անդրոիդ սարքերի համար վ. 1.0 (2011 ապրիլ 13)' + LineEnding +  LineEnding +
   'Ծրագրավորում՝' + LineEnding +
   'Նորայր Չիլինգարյան և Ալեքսեյ Չալաբյան' + LineEnding +
   'Տառատեսակները՝' + LineEnding +
